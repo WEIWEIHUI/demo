@@ -39,8 +39,8 @@ public class Main {
 	}
 
 	public static int call_spider(String date ,String filename){
-		   String info = "cd /home/louyu/ && source env/bin/activate && cd spider/tutorial && scrapy crawl build -a date="+date +" -a filename="+filename;
-	       String shellname = "//home/louyu/shell.sh"
+            String info = "cd /home/louyu/ && source env/bin/activate && cd spider/tutorial && scrapy crawl build -a date="+date +" -a filename="+filename;
+	    String shellname = "/home/louyu/shell.sh";
 	       // String info ="cd /home/hadoop/weilinhui/liantongSpider/tutorial && scrapy crawl build -a date="+date +" -a filename="+filename;
            // String call ="/bin/echo \""+info + "\" > /home/hadoop/weilinhui/liantongSpider/a.sh  &&/bin/sh /home/hadoop/weilinhui/liantongSpider/a.sh";
            // String shellname = "/home/hadoop/weilinhui/liantongSpider/a.sh"
