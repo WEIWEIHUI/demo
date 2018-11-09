@@ -2,6 +2,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 
 class StreamDrainer implements Runnable {
     private InputStream ins;
@@ -26,11 +30,27 @@ class StreamDrainer implements Runnable {
 }
 
 public class Main {
+	public static void writeToFile(String info,String filename) throws IOException {
+		
+		File file =new File(filename);
+		Writer out =new FileWriter(file);
+		out.write(info);
+		out.close();
+	}
+
 	public static int call_spider(String date ,String filename){
-		String call = "cd /home/louyu/ && source env/bin/activate && cd spider/tutorial && scrapy crawl build -a date="+date +" -a filename="+filename;
-		Runtime runtime = Runtime.getRuntime();
+		   String info = "cd /home/louyu/ && source env/bin/activate && cd spider/tutorial && scrapy crawl build -a date="+date +" -a filename="+filename;
+	       String shellname = "//home/louyu/shell.sh"
+	       // String info ="cd /home/hadoop/weilinhui/liantongSpider/tutorial && scrapy crawl build -a date="+date +" -a filename="+filename;
+           // String call ="/bin/echo \""+info + "\" > /home/hadoop/weilinhui/liantongSpider/a.sh  &&/bin/sh /home/hadoop/weilinhui/liantongSpider/a.sh";
+           // String shellname = "/home/hadoop/weilinhui/liantongSpider/a.sh"
+            String call="/bin/sh " +shellname;
+          
+            System.out.println("call：" + call);
+        	Runtime runtime = Runtime.getRuntime();
     	
 		try {
+			writeToFile(info,shellname);
 			Process process = runtime.exec(call);
 			
 			new Thread(new StreamDrainer(process.getInputStream())).start();
@@ -55,7 +75,9 @@ public class Main {
     public static void main(String[] args) {
     	long startTime = System.currentTimeMillis();//获取当前时间
     	call_spider("2018-05","/home/louyu/info/a.xls");
-    	long endTime = System.currentTimeMillis();
+       // call_spider("2018-05","/home/hadoop/weilinhui/liantongSpider/info/a.xls");   
+ 	    long endTime = System.currentTimeMillis();
     	System.out.println("程序运行时间："+(endTime-startTime)+"ms");
 		
 	}
+}
